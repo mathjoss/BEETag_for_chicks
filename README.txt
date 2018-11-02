@@ -33,28 +33,25 @@ INSTRUCTIONS FOR OPERATION
 4. Run tracking_coordinator
 
 
-************  
-Files explanation : functions specific to Beetag_for_chicks :
+FILES EXPLANATION
 
-************
+1. addcolumntxtfile : add a column into your txt files without running the script trasnform_xls_txt_files again.
 
-1. addcolumntxtfile : allow you to add a column into your txt files without running the script trasnform_xls_txt_files again.
-
-2. createbigvideo : allow you to create a video mixing different frames from different video
+2. createbigvideo : create a video mixing different frames from different video
 
 3. find_location : find the number of seconds spent in a certain area
 
 4. find_orientation : find the number of seconds spent in different body orientation
 
-5. manually_test_accuracy_step1 : generate a txt file stored in test_accuracy with random frames analysed
+5. manually_test_accuracy_step1 : create a txt file stored in test_accuracy with random frames analysed
 
-6. manually_test_accuracy_step2 : after you did step1, use the txt files created before, ask user input for orientation in all frames and compare the results : user input // Beetag
+6. manually_test_accuracy_step2 : use the txt files created in step1, ask user input for orientation in all random frames selected previously and compare the results : user input /vs/ Beetag
 
 7. naninterp : interpolate values from a vector
 
 8. optimizeTrackingParameters : optimize the tracking parameters on a video (from Claire Guerin)
 
-9. transform_xls_txt_files : out of a excel sheet, will create txt files for all chicks
+9. transform_xls_txt_files : create txt files out of a excel sheet for all chicks
 
 10. tracking_coordinator : main file coordinating all functions
 
