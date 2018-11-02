@@ -1,5 +1,3 @@
-beeTag Software Instructions ----------------------
-
 This program has been created based on a program from James Crall (https://github.com/jamescrall/idBEE/) in which we added few functions.
 
 If you only want to track tags, please use the original code from James Crall : https://github.com/jamescrall/idBEE/
