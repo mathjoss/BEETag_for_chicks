@@ -47,6 +47,6 @@ end
 
 
 %% Save data
-save('trackingData.mat')
+%save('trackingData.mat')
 end
 
