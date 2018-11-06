@@ -14,7 +14,7 @@ addpath('D:\ACN\\BEEtagBastien_final\src')
 addpath('D:\ACN\\BEEtagBastien_final\src\bradley\bradley')
 
 
-%write the name of the sheet with the data on excel
+%write the name and path of the video you want to analyze
 videoname = 'D:\ACN\Videos\chick1_bigtag_middle.avi';
 
 % write the name of the output file 
