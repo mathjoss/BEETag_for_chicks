@@ -9,26 +9,26 @@
 %lenght of the session, then change accordingly the variable "bin" and the
 
 % add path to the folder src and bradley
-addpath('D:\ACN\BEEtagBastien_final')
-addpath('D:\ACN\\BEEtagBastien_final\src')
-addpath('D:\ACN\\BEEtagBastien_final\src\bradley\bradley')
+addpath('\\cimec-storage\gioval\projects\categorization_tracking\matlab_analysis_Sara\BEEtagBastien_final')
+addpath('\\cimec-storage\gioval\projects\categorization_tracking\matlab_analysis_Sara\BEEtagBastien_final\src')
+addpath('\\cimec-storage\gioval\projects\categorization_tracking\matlab_analysis_Sara\BEEtagBastien_final\src\bradley\bradley')
 
 
-%write the name and path of the video you want to analyze
-videoname = 'D:\ACN\Videos\chick1_bigtag_middle.avi';
+%write the name of the video
+videoname = 'C:\Users\bastien.lemaire\Desktop\Beetag_alldays_file\videos\10min_center_d.avi';
 
-% write the name of the output file 
-outputfile_name = char(strcat('D:\ACN\results\chick1_middletag_side.csv')) ;
+% write the name of the output file
+outputfile_name = char(strcat('C:\Users\bastien.lemaire\Desktop\Beetag_alldays_file\10min_center_d.csv')) ;
 
 %write the code number
-codelist = [15] ;
+codelist = [3279] ;
 
 % write the chick number
-chick_number = 1 ;
+chick_number = 99999 ;
 
 %write the frames you want to analyze
 %for example : [1:240] means that you want to analyze frame 1 to 240
-frames = [1:325] ;
+frames = [1:50] ;
 
 % select side where stimuli is displayed
 fam_positionn = 'left';
@@ -36,12 +36,12 @@ fam_positionn = 'left';
 %Choose the angle between the chick and the horizontal plan, in which you assume the chick 'sees' the screen
 choice_angle = 15;
 
-% indicate a number of frame that does not work (this frame will be erased and replaced by the previous frame)
+% indicate a numbe-r of frame that does not work (this frame will be erased and replaced by the previous frame)
 bad = [] ;
 
 
 
-%% RUN THE PROGRAM :) 
+%% RUN THE PROGRAM :)
 
 %%
 %  get total number of frames for each video
@@ -143,11 +143,11 @@ for p = new_frames
     end
 end
 
-%% POSITION
+% ------------- COMPUTE LOCATION OF TAG
 
 % compute x_track and y_track (coordinate X and Y) for interpolation
-x_track = session_track.CentroidX(new_frames):length(session_track.CentroidX);
-y_track = session_track.CentroidY(new_frames):length(session_track.CentroidY);
+x_track = session_track.CentroidX(new_frames);
+y_track = session_track.CentroidY(new_frames);
 
 % change 0 to nan in the tracked coordinates for better counting
 x_track(x_track == 0) = NaN ;
@@ -174,6 +174,10 @@ for dist = 2:length(x_track_interpol)
     d = sqrt((x_track_interpol(dist)- x_track_interpol(dist-1))^2 + (y_track_interpol(dist)- y_track_interpol(dist-1))^2) ;
     distance_moved = distance_moved + d ;
 end
+% stop exponantial answer
+format long
+% convert distance moved from pixel to cm
+distance_moved = (round(distance_moved*90)/(corner2-corner1)) ;
 
 % Find location of the tag in the interpolate x vector
 locations_overall = find_location(x_track_interpol, far_left_pos, left_pos, right_pos, far_right_pos, corner1, corner2, fam_positionn);
@@ -194,18 +198,13 @@ tot_secs = length(x_track_interpol);
 % Find total of seconds in the arena
 tot_tracked = sum(locations_overall.Far_Left + locations_overall.Left + locations_overall.Center + locations_overall.Right + locations_overall.Far_Right);
 
-
 %%  CREATE TABLE AND STORE DATA
-cell_content = {chick_number, length(new_frames), fam_positionn, locations_overall.Far_Left, locations_overall.Left, locations_overall.Center, locations_overall.Right, locations_overall.Far_Right, locations_overall.nan, locations_overall.Familiar, locations_overall.FamiliarVeryClose, locations_overall.Unfamiliar, locations_overall.UnfamiliarVeryClose, locations_not_interpolate.Far_Left, locations_not_interpolate.Left, locations_not_interpolate.Center, locations_not_interpolate.Right, locations_not_interpolate.Far_Right, locations_not_interpolate.nan, locations_not_interpolate.Familiar, locations_not_interpolate.FamiliarVeryClose, locations_not_interpolate.Unfamiliar, locations_not_interpolate.UnfamiliarVeryClose, tot_tracked, tot_secs, total_tracked, orientation_look.Binocular_Familiar , orientation_look.Binocular_Unfamiliar, orientation_look.Left_Eye_Familiar, orientation_look.Left_Eye_Unfamiliar, orientation_look.Left_Eye_Monocular_Familiar, orientation_look.Left_Eye_Monocular_Unfamiliar, orientation_look.Right_Eye_Familiar, orientation_look.Right_Eye_Unfamiliar, orientation_look.Right_Eye_Monocular_Familiar, orientation_look.Right_Eye_Monocular_Unfamiliar, distance_moved} ;
+cell_content = {chick_number,  length(new_frames), fam_positionn, locations_overall.Far_Left, locations_overall.Left, locations_overall.Center, locations_overall.Right, locations_overall.Far_Right, locations_overall.nan, locations_overall.Familiar, locations_overall.FamiliarVeryClose, locations_overall.Unfamiliar, locations_overall.UnfamiliarVeryClose, locations_not_interpolate.Far_Left, locations_not_interpolate.Left, locations_not_interpolate.Center, locations_not_interpolate.Right, locations_not_interpolate.Far_Right, locations_not_interpolate.nan, locations_not_interpolate.Familiar, locations_not_interpolate.FamiliarVeryClose, locations_not_interpolate.Unfamiliar, locations_not_interpolate.UnfamiliarVeryClose, tot_tracked, tot_secs, total_tracked, orientation_look.Binocular_Familiar , orientation_look.Binocular_Unfamiliar, orientation_look.Left_Eye_Familiar, orientation_look.Left_Eye_Unfamiliar, orientation_look.Left_Eye_Monocular_Familiar, orientation_look.Left_Eye_Monocular_Unfamiliar, orientation_look.Right_Eye_Familiar, orientation_look.Right_Eye_Unfamiliar, orientation_look.Right_Eye_Monocular_Familiar, orientation_look.Right_Eye_Monocular_Unfamiliar, distance_moved};
 data_tab = cell2table(cell_content) ;
 
 %   define headers for the table
+%data_tab.Properties.VariableNames = {'CHICK_ID', 'BIN', 'FAMILIAR_POS', 'secs_FAR_LEFT', 'secs_LEFT', 'secs_CENTER', 'secs_RIGHT', 'secs_FAR_RIGHT', 'secs_NAN', 'secs_FAMILIAR', 'secs_FAMILIAR_VERY_CLOSE', 'secs_UNFAMILIAR', 'secs_UNFAMILIAR_VERY_CLOSE', 'secs_FAR_LEFT_no_interp', 'secs_LEFT_no_interp', 'secs_CENTER_no_interp', 'secs_RIGHT_no_interp', 'secs_FAR_RIGHT_no_interp', 'secs_NAN_no_interp', 'secs_FAMILIAR_no_interp', 'secs_FAMILIAR_VERY_CLOSE_no_interp', 'secs_UNFAMILIAR_no_interp', 'secs_UNFAMILIAR_VERY_CLOSE_no_interp', 'TOT_secs_tracked', 'TOT_secs', 'secs_tracked', 'binocular_familiar' , 'binocular_unfamiliar', 'left_eye_familiar', 'left_eye_unfamiliar', 'left_eye_monoc_familiar', 'left_eye_monoc_unfamiliar', 'right_eye_familiar', 'right_eye_unfamiliar', 'right_eye_monoc_familiar', 'right_eye_monoc_unfamiliar', 'distance_moved'};
 data_tab.Properties.VariableNames = {'CHICK_ID', 'BIN', 'FAMILIAR_POS', 'secs_FAR_LEFT', 'secs_LEFT', 'secs_CENTER', 'secs_RIGHT', 'secs_FAR_RIGHT', 'secs_NAN', 'secs_FAMILIAR', 'secs_FAMILIAR_VERY_CLOSE', 'secs_UNFAMILIAR', 'secs_UNFAMILIAR_VERY_CLOSE', 'secs_FAR_LEFT_no_interp', 'secs_LEFT_no_interp', 'secs_CENTER_no_interp', 'secs_RIGHT_no_interp', 'secs_FAR_RIGHT_no_interp', 'secs_NAN_no_interp', 'secs_FAMILIAR_no_interp', 'secs_FAMILIAR_VERY_CLOSE_no_interp', 'secs_UNFAMILIAR_no_interp', 'secs_UNFAMILIAR_VERY_CLOSE_no_interp', 'TOT_secs_tracked', 'TOT_secs', 'secs_tracked', 'binocular_familiar' , 'binocular_unfamiliar', 'left_eye_familiar', 'left_eye_unfamiliar', 'left_eye_monoc_familiar', 'left_eye_monoc_unfamiliar', 'right_eye_familiar', 'right_eye_unfamiliar', 'right_eye_monoc_familiar', 'right_eye_monoc_unfamiliar', 'distance_moved'};
 
 %   store table in an xlsx file
 writetable(data_tab,outputfile_name) ;
-
-
-
-
-
