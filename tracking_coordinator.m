@@ -110,7 +110,7 @@ for i = periodtoanalyze
             sessions_list(end+1) = pp+1;
         end
     end
-    sessions_list(end+1) = size(day,1) ;
+    sessions_list(end+1) = size(day,1)+1 ;
     
     % select variables that never changes accross days
     codelist = codelist(1) ;
