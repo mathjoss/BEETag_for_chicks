@@ -1,4 +1,7 @@
-function [brThresh brFilt optTime] = optimizeTrackingParameters(vid, threshVals, filtVals, nframes, taglist, chick_number)
+function [brThresh brFilt optTime] = optimizeTrackingParameters_tests(vid, threshVals, filtVals, nframes, taglist, chick_number)
+
+%% This function is used if you want to optimize frames with the main function : tracking_coordinator_tests
+
 
 %Inputs:
 %vid: VideoReader object
