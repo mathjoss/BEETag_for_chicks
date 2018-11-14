@@ -1,5 +1,7 @@
 function [brThresh brFilt optTime] = optimizeTrackingParameters(vid, threshVals, filtVals, nframes, taglist, chick_number, i)
 
+%% This function is used if you want to optimize frames with the main function : tracking_coordinator
+
 %Inputs:
 %vid: VideoReader object
 %threshVals - range of bradley threshold values to test
