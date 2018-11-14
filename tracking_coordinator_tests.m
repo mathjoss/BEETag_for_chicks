@@ -52,7 +52,7 @@ endframe = my_video.NumberOfFrames;
 optimize = input('Do you want to optimize tracking parameters ? add AT LEAST 2 hours to matlab analysis [y/n] : ', 's') ;
 if optimize == 'y'
     disp('optimize tracking parameters started !') ;
-    [brThresh brFilt optTime] = optimizeTrackingParameters_tests(my_video, 1:6, 9:15, 80, codelist) ;
+    [brThresh brFilt optTime] = optimizeTrackingParameters_tests(my_video, 1:6, 9:15, 80, codelist, chick_number) ;
     parameters = strcat('_thresh',num2str(brThresh),'_filter',num2str(brFilt)) ;
 elseif optimize == 'n'
     disp('base tracking parameters chosen') ;
