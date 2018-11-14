@@ -6,7 +6,7 @@
 %- In this script, remember to change the video name for the variable
 %"video" (line ADD)
 %- In this script, remember to check the bins duration according to the
-%lenght of the session, then change accordingly the variable "bin" and the
+%length of the session, then change accordingly the variable "bin" 
 
 % add path to the folder src and bradley
 addpath('\\cimec-storage\gioval\projects\categorization_tracking\matlab_analysis_Sara\BEEtagBastien_final')
@@ -52,7 +52,7 @@ endframe = my_video.NumberOfFrames;
 optimize = input('Do you want to optimize tracking parameters ? add AT LEAST 2 hours to matlab analysis [y/n] : ', 's') ;
 if optimize == 'y'
     disp('optimize tracking parameters started !') ;
-    [brThresh brFilt optTime] = optimizeTrackingParameters(my_video, 1:6, 9:15, 200, codelist) ;
+    [brThresh brFilt optTime] = optimizeTrackingParameters_tests(my_video, 1:6, 9:15, 80, codelist) ;
     parameters = strcat('_thresh',num2str(brThresh),'_filter',num2str(brFilt)) ;
 elseif optimize == 'n'
     disp('base tracking parameters chosen') ;
